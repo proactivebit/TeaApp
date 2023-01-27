@@ -7,8 +7,21 @@ import {
   View,
 } from "react-native";
 import { COLORS, FONTS, icons, SIZES } from "../constants";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { setTheme } from "../stores/themeSlice";
 
 const HeaderBar = () => {
+  const theme = useAppSelector((state) => state.theme.appTheme);
+  const dispatch = useAppDispatch();
+
+  function toggleThemeHandler() {
+    if (theme.name == "light") {
+      dispatch(setTheme("dark"));
+    } else {
+      dispatch(setTheme("light"));
+    }
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -23,7 +36,6 @@ const HeaderBar = () => {
         <Text style={{ color: COLORS.white, ...FONTS.h2 }}>Wendy,</Text>
         <Text style={{ color: COLORS.white, ...FONTS.h2 }}>Welcome Back!</Text>
       </View>
-
       {/* Toggle View */}
       <TouchableOpacity
         style={{
@@ -35,6 +47,7 @@ const HeaderBar = () => {
           borderRadius: 20,
           backgroundColor: COLORS.lightPurple,
         }}
+        onPress={toggleThemeHandler}
       >
         {/* Sun */}
         <View
@@ -43,6 +56,7 @@ const HeaderBar = () => {
             height: 40,
             alignItems: "center",
             justifyContent: "center",
+            ...(theme.name == "light" ? styles.selectedLightModeStyle : {}),
           }}
         >
           <Image
@@ -57,7 +71,7 @@ const HeaderBar = () => {
             height: 40,
             alignItems: "center",
             justifyContent: "center",
-            ...styles.selectedNightModeStyle,
+            ...(theme.name == "dark" ? styles.selectedNightModeStyle : {}),
           }}
         >
           <Image

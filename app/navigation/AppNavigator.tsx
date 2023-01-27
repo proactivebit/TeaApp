@@ -4,14 +4,15 @@ import {
   StackScreenProps,
 } from "@react-navigation/stack";
 import React from "react";
+import { LocationType, MenuType } from "../constants/dummy";
 import { Location, Order, OrderDetail } from "../screens";
 import { AppTabsParamList, TabsNavigator } from "./TabsNavigator";
 
 export type AppStackParamList = {
   AppTab: NavigatorScreenParams<AppTabsParamList>;
   Location: undefined;
-  Order: undefined;
-  OrderDetail: undefined;
+  Order: { selectedLocation: LocationType };
+  OrderDetail: { selectedItem: MenuType };
 };
 
 export type AppStackScreenProps<T extends keyof AppStackParamList> =
